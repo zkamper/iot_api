@@ -1,0 +1,23 @@
+{
+  "name": "iot_api",
+  "version": "1.0.0",
+  "description": "",
+  "keywords": [
+    "iot"
+  ],
+  "homepage": "https://github.com/zkamper/iot_api#readme",
+  "bugs": {
+    "url": "https://github.com/zkamper/iot_api/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zkamper/iot_api.git"
+  },
+  "license": "ISC",
+  "author": "",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  }
+}
