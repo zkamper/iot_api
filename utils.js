@@ -65,12 +65,12 @@ function createTemperatureLogger(TemperatureModel) {
     if (clamped > high && !acState) {
       setSystemState(true, windowState);
       console.log(`[Temperature Logger] AC turned ON. Temperature: ${clamped}°C`);
-      broadcastMovementAlert({ acState: true });
+      broadcastAlert("climateState", { acState: true });
     }
     if (clamped < low && !windowState) {
-      setSystemState(acState, true);
+      setSystemState(false, true);
       console.log(`[Temperature Logger] Window opened. Temperature: ${clamped}°C`);
-      broadcastMovementAlert({ windowState: true });
+      broadcastAlert("climateState", { windowState: true });
     }
 
     try {
@@ -85,10 +85,10 @@ function createTemperatureLogger(TemperatureModel) {
 
 const clients = new Set();
 
-function broadcastMovementAlert(data) {
+function broadcastAlert(broadcastType, data) {
   for (const client of clients) {
     if (client.readyState === WebSocket.OPEN) {
-      client.send(JSON.stringify({ type: 'movement_alert', data }));
+      client.send(JSON.stringify({ type: broadcastType, data }));
     }
   }
 }
@@ -108,7 +108,7 @@ function createMovementLogger(MovementModel) {
 
     try {
       await MovementModel.create({ duration });
-      broadcastMovementAlert({ duration });
+      broadcastAlert("movement", { duration });
       console.log(`[Movement Logger] Detected movement for ${duration}s`);
     } catch (err) {
       console.error('Failed to log movement:', err);
